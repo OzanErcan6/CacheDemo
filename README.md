@@ -1,21 +1,7 @@
+
 # Caching Demo with Spring Boot
 
 This project demonstrates the usage of caching in a Spring Boot application, showcasing how to use `@Cacheable`, `@CachePut`, and `@CacheEvict` annotations for managing caches effectively. The demo operates with a simple in-memory H2 database and performs basic CRUD operations on `User` entities while illustrating how caching can improve performance by reducing redundant database calls.
-
-## What is Caching?
-
-Caching is a technique used to store frequently accessed data in a temporary storage (called the "cache") so that future requests for the same data can be served faster without needing to access the underlying data source (like a database). This is particularly useful for scenarios where data doesn't change often and is read frequently.
-
-In this project, we use caching to store user data in memory, allowing faster access to user details by skipping database lookups once the data is cached.
-
-## Why is Caching Important?
-
-Caching is essential for improving application performance, especially for read-heavy workloads. When data retrieval from a database or an external service is expensive in terms of time or resources, caching can significantly reduce response times and server load. By storing the results of previous requests, caching ensures that subsequent requests for the same data are served from the cache instead of querying the database again.
-
-Here are some benefits of caching:
-- **Faster Response Times**: Reduces the time it takes to fetch frequently accessed data.
-- **Reduced Load on Database**: Minimizes the number of database queries, improving scalability.
-- **Improved User Experience**: Provides quicker access to data, enhancing the responsiveness of the application.
 
 ## Setup and Run
 
@@ -24,23 +10,36 @@ Here are some benefits of caching:
    ```bash
    git clone https://github.com/OzanErcan6/CacheDemo.git
    ```
+2. **Select Branch**:
+   - For the default Spring cache, choose the `master` branch.
+   - For Redis setup, choose the `redis` branch.
+3. Open the project in your favorite Java IDE (e.g., IntelliJ IDEA, Eclipse).
 
-2. Open the project in your favorite Java IDE (e.g., IntelliJ IDEA, Eclipse).
+4. Make sure your Java version is 17 or later.
 
-3. Make sure your Java version is 17 or later.
+7. Redis Setup (For Redis Branch Only):
 
-4. Run the Spring Boot application from your IDE.
+   To run Redis, execute the following Docker command:
 
-5. To access the H2 console (for viewing the in-memory database), navigate to [http://localhost:8080/h2-console](http://localhost:8080/h2-console) in your browser.
+   ```bash
+   docker run --name redis -p 6379:6379 -d redis
+   ```
+
+5. Run the Spring Boot application from your IDE.
+
+6. To access the H2 console (for viewing the in-memory database), navigate to [http://localhost:8080/h2-console](http://localhost:8080/h2-console) in your browser.
+
+
+   This will run Redis in a Docker container and expose it on port 6379. Ensure that Redis is up and running before starting the Spring Boot application.
 
 ## Caching in the Project
 
 ### Annotations Used:
 
 - **`@Cacheable`**: This annotation is used to cache the result of a method. If the method is called again with the same parameters, the cached result will be returned without executing the method again.
-  
+
 - **`@CachePut`**: This annotation is used to update the cache with the new value after the method execution, even if the result is already cached.
-  
+
 - **`@CacheEvict`**: This annotation is used to remove a specific item or all items from the cache when a method is executed.
 
 ### Example Use Cases:
@@ -50,9 +49,4 @@ Here are some benefits of caching:
 
 ## Testing Caching Behavior
 
-The demo includes unit tests that validate the caching functionality:
-- **`getUserWithId1`**: Ensures that the user data is cached and reused for subsequent requests.
-- **`getUserWithId1AndUpdateIt`**: Verifies that when a user is updated, the cache is refreshed with the new data.
-- **`getUserWithId1AndDeleteIt`**: Confirms that the cache is cleared when a user is deleted.
-
-These tests are designed to ensure that the caching mechanism works as expected and provides performance benefits by reducing unnecessary database queries.
+The demo includes unit tests that validate the caching functionality.
